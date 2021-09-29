@@ -29,6 +29,7 @@
   crossorigin="anonymous"></script>
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <!-- =======================================================
   * Template Name: Folio - v4.5.0
@@ -440,15 +441,22 @@
               </div>
             </div>
 
+
+
+
+
+
+
+
             <div class="col-lg-6">
-              <form id="gform" action="https://script.google.com/macros/s/AKfycbwsF-zkoyws9NQVrrJF9uULNFM_2u6HDHcB6TwznBcjxj4b2VLMFUW4HWTCcd9GptiSDQ/exec" method="POST" role="form" >
+              <form id="gform"     action="https://script.google.com/macros/s/AKfycbwsF-zkoyws9NQVrrJF9uULNFM_2u6HDHcB6TwznBcjxj4b2VLMFUW4HWTCcd9GptiSDQ/exec" role="form" method="POST" >
                 <div class="row gy-3">
 
                   <div class="col-lg-6">
                     <div class="form-group contact-block1">
                      
                      
-                      <input type="text" name="name" class="form-control" id="form_sname" placeholder="Your Name" required>
+                      <input  class="form-control" name="name"  id="form_sname" placeholder=" Enter Your fisrt Name " >
                       <span class="error_form" id="sname_error_message"></span>
                     </div>
                   </div>
@@ -456,7 +464,7 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       
-                      <input type="email" class="form-control" name="email" id="form_email" placeholder="Your Email" required>
+                      <input  class="form-control"  name="email" id="form_email" placeholder="Your Email" >
                       <span class="error_form" id="email_error_message"></span> 
                     </div>
 
@@ -464,13 +472,13 @@
 
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                      <input type="text" class="form-control"  name="subject" id="subject" placeholder="Subject" >
                     </div>
                   </div>
 
                   <div class="col-lg-12">
                     <div class="form-group">
-                      <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+                      <textarea  name="message" class="form-control" placeholder="Message" ></textarea>
                     </div>
                   </div>
 
@@ -481,7 +489,7 @@
                   </div>
 
                   <div class="mt-0">
-                    <input type="submit" class="btn btn-defeault btn-send" value="Send message">
+                    <input onclick="setTimeout(function() { window.location.reload(); }, 1000)"  type="submit" class="btn btn-defeault btn-send" value="Send message">
                   </div>
 
                 </div>
@@ -551,26 +559,29 @@
        var error_email = false;
      
 
-       $("#form_sname").focusout(function() {
+       $("#form_sname").keyup(function() {
           check_sname();
        });
        $("#form_email").focusout(function() {
           check_email();
        });
    
-
+        var flag=0; 
       
 
        function check_sname() {
-          var pattern = /^[a-zA-Z]*$/;
+          var pattern = /^[a-zA-Z ]*$/;
           var sname = $("#form_sname").val()
           if (pattern.test(sname) && sname !== '') {
              $("#sname_error_message").hide();
-             $("#form_sname").css("border-bottom","2px solid #34F458");
+             $("#form_sname").css("border-color","2px solid #34F458");
+             flag=0;
+
           } else {
-             $("#sname_error_message").html("Should contain only Characters");
+             $("#sname_error_message").html("Should contain  Characters only");
              $("#sname_error_message").show();
              $("#form_sname").css("border-bottom","2px solid #F90A0A");
+             flag=1;
              error_fname = true;
           }
        }
@@ -581,16 +592,18 @@
           var email = $("#form_email").val();
           if (pattern.test(email) && email !== '') {
              $("#email_error_message").hide();
-             $("#form_email").css("border-bottom","2px solid #34F458");
+             $("#form_email").css("border-top","2px solid #34F458");
+             flag=0;
           } else {
              $("#email_error_message").html("Invalid Email");
              $("#email_error_message").show();
-             $("#form_email").css("border-bottom","2px solid #F90A0A");
+             $("#form_email").css("border-top","2px solid #F90A0A");
              error_email = true;
+             flag=1;
           }
        }
 
-       $("#registration_form").submit(function() {
+       $("#gform").submit(function() {
   
           error_sname = false;
           error_email = false;
@@ -598,14 +611,18 @@
 
      
           check_sname();
+
           check_email();
          
 
-          if (error_fname === false && error_sname === false && error_email === false && error_password === false && error_retype_password === false) {
-<!--              alert("Registration Successfull"); -->
+          if (error_sname === false && error_email === false ) {
+            //  alert("Registration Successfull");
+            
+            
+
              return true;
           } else {
-<!--              alert("Please Fill the form Correctly"); -->
+            //  alert("Please Fill the form Correctly");
              return false;
           }
 
@@ -616,6 +633,31 @@
 
 
 
+
+<!-- <script>
+  
+  if(flag!=1){
+  $("#gform").submit((e)=>{
+      e.preventDefault()
+      $.ajax({
+          url:"https://script.google.com/macros/s/AKfycbwsF-zkoyws9NQVrrJF9uULNFM_2u6HDHcB6TwznBcjxj4b2VLMFUW4HWTCcd9GptiSDQ/exec",
+          data:$("#gform").serialize(),
+          method:"POST",
+          success:function (response){
+              alert("Form submitted successfully")
+              window.location.reload()
+              window.location.href="https://google.com"
+          },
+          error:function (err){
+              alert("Something Error")
+
+          }
+      })
+  })
+
+
+}
+</script> -->
 
 
 
